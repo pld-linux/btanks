@@ -10,7 +10,7 @@ Source0:	http://dl.sourceforge.net/btanks/%{name}-%{version}.tar.bz2
 # Source0-md5:	538eadf2b78897620f3ef683a4ea423a
 Source1:	%{name}.desktop
 URL:		http://btanks.sourceforge.net/blog/langswitch_lang/en
-BuildRequires:	OpenAL-devel
+BuildRequires:	OpenAL-devel >= 0.0.8
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL_image-devel
 BuildRequires:	expat-devel
