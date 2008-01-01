@@ -34,11 +34,12 @@ And all is packed and ready for you in Battle Tanks.
 %setup -q
 # Proper name for our lua
 sed -e 's/lua5.1/lua51/g' -i SConscript
+sed -e 's/-O3 //g' -i SConstruct
 
 %build
 %scons \
-    resources_dir=%{_datadir}/%{name} \
-    lib_dir=%{_libdir}
+	resources_dir=%{_datadir}/%{name} \
+	lib_dir=%{_libdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -60,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README-linux.txt
+%doc ChangeLog README-*.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_libdir}/*.so
