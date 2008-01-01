@@ -19,6 +19,7 @@ BuildRequires:	lua51-devel
 BuildRequires:	pkgconfig
 BuildRequires:	scons
 BuildRequires:	zlib-devel
+Requires:	%{name}-data = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -44,17 +45,12 @@ sed -e 's/-O3 //g' -i SConstruct
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_datadir}/%{name},%{_desktopdir},%{_pixmapsdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_desktopdir},%{_pixmapsdir}}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install bt $RPM_BUILD_ROOT%{_bindir}/%{name}
 install *.so $RPM_BUILD_ROOT%{_libdir}
 install src/bt.xpm $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.xpm
-cp -r data $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-# Game is looking for those libs in the datadir folder
-ln -s %{_libdir}/libbt_objects.so $RPM_BUILD_ROOT%{_datadir}/%{name}/libbt_objects.so
-ln -s %{_libdir}/libbt.so $RPM_BUILD_ROOT%{_datadir}/%{name}/libbt.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -63,7 +59,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README-*.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%{_datadir}/%{name}
 %{_libdir}/*.so
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.xpm
