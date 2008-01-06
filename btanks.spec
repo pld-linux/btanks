@@ -46,17 +46,19 @@ sed -e 's/-O3 //g' -i SConstruct
 
 %build
 %scons \
-	resources_dir=%{_datadir}/%{name} \
+	resources_dir=%{_libdir}/%{name} \
 	lib_dir=%{_libdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_desktopdir},%{_pixmapsdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name},%{_datadir}/%{name},%{_desktopdir},%{_pixmapsdir}}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install bt $RPM_BUILD_ROOT%{_bindir}/%{name}
-install *.so $RPM_BUILD_ROOT%{_libdir}
+install libbt.so libmrt.so libsdlx.so $RPM_BUILD_ROOT%{_libdir}
+install libbt_objects.so $RPM_BUILD_ROOT%{_libdir}/%{name}
+ln -sf %{_datadir}/%{name}/data $RPM_BUILD_ROOT%{_libdir}/%{name}/data
 install src/bt.xpm $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.xpm
 
 %clean
@@ -66,6 +68,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README-*.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/libbt.so
+%attr(755,root,root) %{_libdir}/libmrt.so
+%attr(755,root,root) %{_libdir}/libsdlx.so
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/libbt_objects.so
+%{_libdir}/%{name}/data
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.xpm
