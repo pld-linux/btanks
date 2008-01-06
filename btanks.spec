@@ -1,6 +1,5 @@
-# TODO:
-# - pl description and summary
-Summary:	Fast 2d tank arcade game with multiplayer and split-screen modes
+Summary:	Fast 2D tank arcade game with multiplayer and split-screen modes
+Summary(pl.UTF-8):	Szybka gra zręcznościowa z czołgami, trybem dla wielu graczy i podzielonym ekranem
 Name:		btanks
 Version:	0.7.5800
 Release:	1
@@ -17,6 +16,7 @@ BuildRequires:	expat-devel
 BuildRequires:	libsigc++-devel
 BuildRequires:	lua51-devel
 BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
 BuildRequires:	scons
 BuildRequires:	zlib-devel
 Requires:	%{name}-data = %{version}
@@ -30,6 +30,13 @@ fun and dynamic, it has several network modes for deathmatch and
 cooperative - what else is needed to have fun with your friends?
 
 And all is packed and ready for you in Battle Tanks.
+
+%description -l pl.UTF-8
+Battle Tanks to zabawna gra, w której można wybrać jeden z trzech
+pojazdów i eliminować wrogów przy użyciu całego arsenału broni. Ma
+oryginalną grafikę w stylu kreskówek i świetną muzykę; jest zabawna i
+dynamiczna, ma kilka trybów sieciowych, pozwalających na grę przeciwko
+wszystkim oraz współpracę - cóż więcej potrzeba do zabawy z kolegami?
 
 %prep
 %setup -q
@@ -59,6 +66,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README-*.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/*.so
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.xpm
