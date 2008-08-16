@@ -8,7 +8,7 @@ Group:		X11/Applications/Games
 Source0:	http://dl.sourceforge.net/btanks/%{name}-%{version}.tar.bz2
 # Source0-md5:	d815db9784ad6498c3c5d002e64106b3
 Source1:	%{name}.desktop
-URL:		http://btanks.sourceforge.net/blog/langswitch_lang/en
+URL:		http://btanks.sourceforge.net/blog/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL_image-devel
 BuildRequires:	expat-devel
