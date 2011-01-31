@@ -1,12 +1,12 @@
 Summary:	Fast 2D tank arcade game with multiplayer and split-screen modes
 Summary(pl.UTF-8):	Szybka gra zręcznościowa z czołgami, trybem dla wielu graczy i podzielonym ekranem
 Name:		btanks
-Version:	0.8.7686
+Version:	0.9.8083
 Release:	1
-License:	GPL v2
+License:	GPL v2+
 Group:		X11/Applications/Games
-Source0:	http://dl.sourceforge.net/btanks/%{name}-%{version}.tar.bz2
-# Source0-md5:	f5e4076e8562f4ad54fefeceaa37870d
+Source0:	http://downloads.sourceforge.net/btanks/%{name}-%{version}.tar.bz2
+# Source0-md5:	49cb95c0eec47d3436c4fdf65e7c9d12
 Source1:	%{name}.desktop
 URL:		http://btanks.sourceforge.net/blog/
 BuildRequires:	OpenGL-GLU-devel
@@ -41,10 +41,13 @@ wszystkim oraz współpracę - cóż więcej potrzeba do zabawy z kolegami?
 %prep
 %setup -q
 # Proper name for our lua
-sed -e 's/lua5.1/lua51/g' -i engine/SConscript
-sed -e 's/-O3 //g' -i engine/SConscript
+%{__sed} -e 's/lua5.1/lua51/g' -i engine/SConscript
 
 %build
+export CXXFLAGS="%{rpmcxxflags} -I/usr/include/SDL"
+export CCFLAGS="%{rpmcflags}"
+export CXX="%{__cxx}"
+export CC="%{__cc}"
 %scons \
 	resources_dir=%{_datadir}/%{name} \
 	plugins_dir=%{_libdir}/%{name} \
@@ -55,15 +58,15 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name},%{_datadir}/%{name},%{_desktopdir},%{_pixmapsdir}}
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-install build/release/engine/btanks $RPM_BUILD_ROOT%{_bindir}/%{name}
-install build/release/editor/bted $RPM_BUILD_ROOT%{_bindir}/bted
-install build/release/engine/libbt.so $RPM_BUILD_ROOT%{_libdir}
-install build/release/mrt/libmrt.so $RPM_BUILD_ROOT%{_libdir}
-install build/release/sdlx/libsdlx.so $RPM_BUILD_ROOT%{_libdir}
-install build/release/clunk/libclunk.so $RPM_BUILD_ROOT%{_libdir}
-install build/release/objects/libbt_objects.so $RPM_BUILD_ROOT%{_libdir}/%{name}
-install engine/src/bt.xpm $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.xpm
+cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+cp -a build/release/engine/btanks $RPM_BUILD_ROOT%{_bindir}/%{name}
+cp -a build/release/editor/bted $RPM_BUILD_ROOT%{_bindir}/bted
+cp -a build/release/engine/libbtanks_engine.so $RPM_BUILD_ROOT%{_libdir}
+cp -a build/release/mrt/libmrt.so $RPM_BUILD_ROOT%{_libdir}
+cp -a build/release/sdlx/libsdlx.so $RPM_BUILD_ROOT%{_libdir}
+cp -a build/release/clunk/libclunk.so $RPM_BUILD_ROOT%{_libdir}
+cp -a build/release/objects/libbt_objects.so $RPM_BUILD_ROOT%{_libdir}/%{name}
+cp -a engine/src/bt.xpm $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.xpm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -73,7 +76,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README-*.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/bted
-%attr(755,root,root) %{_libdir}/libbt.so
+%attr(755,root,root) %{_libdir}/libbtanks_engine.so
 %attr(755,root,root) %{_libdir}/libmrt.so
 %attr(755,root,root) %{_libdir}/libsdlx.so
 %attr(755,root,root) %{_libdir}/libclunk.so
